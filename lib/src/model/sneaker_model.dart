@@ -2,9 +2,9 @@ import 'package:json_annotation/json_annotation.dart';
 
 @JsonSerializable()
 class Sneaker {
-  late final String name;
-  late final double price;
-  late final String image;
+  String name;
+  double price;
+  String image;
 
   bool isFav = false;
 

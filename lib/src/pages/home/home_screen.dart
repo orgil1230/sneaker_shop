@@ -1,23 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:get/get.dart';
+import 'package:sneakers_shop/src/pages/home/widgets/newest_shoes.dart';
 import 'package:sneakers_shop/src/pages/list/list.dart';
 import 'package:sneakers_shop/src/theme/my_colors.dart';
 import 'package:sneakers_shop/src/theme/my_textstyles.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    print('height----$height');
-    print('width----$width');
 
     return Container(
       margin: const EdgeInsets.fromLTRB(18, 58, 0, 0),
@@ -100,9 +95,13 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               InkWell(
                 onTap: () {
-                  Navigator.of(context)
-                      .pushNamed(ListScreen.routeName, arguments: 'popular');
+                  // Navigator.of(context)
+                  //     .pushNamed(ListScreen.routeName, arguments: 'popular');
+                  Get.toNamed(ListScreen.routeName);
                 },
+                // print('snackbar');
+                // Get.defaultDialog(title: 'haha');
+
                 child: Container(
                   margin: const EdgeInsets.only(right: 18),
                   child: const Text(
@@ -178,6 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
+          const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -198,20 +198,17 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                height: 200,
-                width: 200,
-                color: Colors.grey,
-              ),
-              Container(
-                height: 200,
-                width: 200,
-                color: Colors.grey,
-              ),
-            ],
+          const SizedBox(height: 16),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                NewestShoes(),
+                NewestShoes(),
+                NewestShoes(),
+              ],
+            ),
           ),
         ],
       ),

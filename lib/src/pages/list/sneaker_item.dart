@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sneakers_shop/src/model/sneaker_model.dart';
+import 'package:sneakers_shop/src/pages/list/list_controller.dart';
 
 import '../../theme/my_colors.dart';
 
-class SneakerItem extends StatefulWidget {
-  Sneaker sneaker;
+class SneakerItem extends StatelessWidget {
+  int index;
+  final listController = Get.find<ListController>();
 
-  SneakerItem({super.key, required this.sneaker});
+  SneakerItem({super.key, required this.index});
 
-  @override
-  State<SneakerItem> createState() => _SneakerItemState();
-}
-
-class _SneakerItemState extends State<SneakerItem> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -27,23 +25,94 @@ class _SneakerItemState extends State<SneakerItem> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              InkWell(
-                onTap: () {
-                  setState(() {
-                    widget.sneaker.isFav = !widget.sneaker.isFav;
-                  });
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Icon(widget.sneaker.isFav
-                      ? Icons.favorite
-                      : Icons.favorite_outline),
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext ctx) {
+                            return AlertDialog(
+                              title: const Text('Please Confirm'),
+                              content: const Text(
+                                  'Are you sure to edit the sneaker?'),
+                              actions: [
+                                // The "Yes" button
+                                TextButton(
+                                    onPressed: () {
+                                      // Remove the sneaker
+                                      listController.onTapEdit(index);
+                                      // Close the dialog
+                                    },
+                                    child: const Text('Yes')),
+                                TextButton(
+                                    onPressed: () {
+                                      // Close the dialog
+                                      Get.back();
+                                    },
+                                    child: const Text('No'))
+                              ],
+                            );
+                          });
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Icon(Icons.edit_outlined),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext ctx) {
+                            return AlertDialog(
+                              title: const Text('Please Confirm'),
+                              content: const Text(
+                                  'Are you sure to remove the sneaker?'),
+                              actions: [
+                                // The "Yes" button
+                                TextButton(
+                                    onPressed: () {
+                                      // Remove the sneaker
+                                      listController.onTapDelete(index);
+                                      // Close the dialog
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text('Yes')),
+                                TextButton(
+                                    onPressed: () {
+                                      // Close the dialog
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text('No'))
+                              ],
+                            );
+                          });
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Icon(Icons.delete_outline),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      listController.onTapFavourite(index);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(listController.sneakers[index].isFav
+                          ? Icons.favorite
+                          : Icons.favorite_outline),
+                    ),
+                  ),
+                ],
               ),
               SizedBox(
                 width: 149,
                 height: 116,
-                child: Image.asset('assets/images/${widget.sneaker.image}'),
+                child: Image.asset(
+                    'assets/images/${listController.sneakers[index].image}'),
               ),
             ],
           ),
@@ -58,9 +127,9 @@ class _SneakerItemState extends State<SneakerItem> {
                 fontWeight: FontWeight.w600,
               ),
               children: <TextSpan>[
-                TextSpan(text: widget.sneaker.name),
+                TextSpan(text: listController.sneakers[index].name),
                 TextSpan(
-                    text: '\n\$ ${widget.sneaker.price}',
+                    text: '\n\$ ${listController.sneakers[index].price}',
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
