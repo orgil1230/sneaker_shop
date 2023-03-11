@@ -1,10 +1,8 @@
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:sneakers_shop/src/model/sneaker_model.dart';
 import 'package:sneakers_shop/src/pages/create_product/create_screen.dart';
 
-import 'package:sneakers_shop/src/pages/edit_product/edit_controller.dart';
 import 'package:sneakers_shop/src/pages/edit_product/edit_product.dart';
 
 import 'dump_json.dart';
