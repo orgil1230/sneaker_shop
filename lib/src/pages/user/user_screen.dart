@@ -1,17 +1,21 @@
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sneakers_shop/src/pages/1_splash/splash.dart';
 
-class UserScreen extends StatefulWidget {
+class UserScreen extends StatelessWidget {
   const UserScreen({super.key});
 
   @override
-  State<UserScreen> createState() => _UserScreenState();
-}
-
-class _UserScreenState extends State<UserScreen> {
-  @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.greenAccent,
+    return ProfileScreen(
+      providers: [EmailAuthProvider()],
+      actions: [
+        SignedOutAction((context) {
+          Get.toNamed(Splash.routeName);
+        })
+      ],
+      avatarSize: 24,
     );
   }
 }

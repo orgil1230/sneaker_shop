@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:sneakers_shop/firebase_options.dart';
-import 'package:sneakers_shop/src/pages/0_splash/splash.dart';
-import 'package:sneakers_shop/src/pages/0_splash/splash_binding.dart';
-import 'package:sneakers_shop/src/pages/1_sign_in/aa_sign_in.dart';
+import 'package:sneakers_shop/src/pages/1_splash/splash.dart';
+import 'package:sneakers_shop/src/pages/1_splash/splash_binding.dart';
+import 'package:sneakers_shop/src/pages/2_sign_in/aa_sign_in.dart';
 import 'package:sneakers_shop/src/pages/create_product/create_product.dart';
 import 'package:sneakers_shop/src/pages/detail/detail.dart';
 import 'package:sneakers_shop/src/pages/home/home_binding.dart';
@@ -15,8 +15,7 @@ import 'package:sneakers_shop/src/pages/list/list.dart';
 import 'package:sneakers_shop/src/pages/list/list_binding.dart';
 
 import 'package:sneakers_shop/src/pages/tabs/tabs.dart';
-
-import 'src/pages/1_sign_in/sign_in.dart';
+import 'package:sneakers_shop/src/pages/0_sneaker/main_binding.dart';
 
 Future<void> main() async {
   await GetStorage.init();
@@ -39,6 +38,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Outfit',
       ),
       //home: const TabsScreen(),
+      initialBinding: MainBinding(),
       initialRoute: '/',
       getPages: [
         GetPage(

@@ -35,7 +35,7 @@ class ListScreen extends GetView<ListController> {
                     itemBuilder: (BuildContext context, int index) {
                       if (index == controller.sneakers.length) {
                         return InkWell(
-                          onTap: () => controller.onTapCreate,
+                          onTap: () => controller.onTapCreate(),
                           child: Container(
                             width: double.infinity,
                             decoration: BoxDecoration(

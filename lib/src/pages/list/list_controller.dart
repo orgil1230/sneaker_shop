@@ -1,16 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:sneakers_shop/src/model/sneaker_model.dart';
+import 'package:sneakers_shop/src/pages/0_sneaker/main_controller.dart';
 import 'package:sneakers_shop/src/pages/create_product/create_screen.dart';
 
 import 'package:sneakers_shop/src/pages/edit_product/edit_product.dart';
 
 import 'dump_json.dart';
 
-class ListController extends GetxController {
-  RxList sneakers = [].obs;
-  RxBool isLoading = false.obs;
-
+class ListController extends MainController {
   final box = GetStorage();
 
   @override
@@ -19,16 +18,23 @@ class ListController extends GetxController {
     isLoading.value = true;
     await box.write('sneakers', sneakers);
 
-    await Future.delayed(const Duration(seconds: 1));
-    sneakers.value = jsonSneakers
-        .map((sneakerJson) => Sneaker.fromJson(sneakerJson))
-        .toList();
+    FirebaseFirestore.instance.collection('sneakers').get().then(
+      (value) {
+        sneakers.value = value.docs.map((e) {
+          return Sneaker.fromSnapshot(e);
+        }).toList();
+        sneakers.refresh();
+      },
+    );
+    // sneakers.value = jsonSneakers
+    //     .map((sneakerJson) => Sneaker.fromJson(sneakerJson))
+    //     .toList();
 
     isLoading.value = false;
   }
 
   onTapCreate() {
-    Get.toNamed(CreateScreen.routeName);
+    Get.toNamed(CreateScreen.routeName)!.then((value) => sneakers.refresh());
   }
 
   onTapEdit(int index) {

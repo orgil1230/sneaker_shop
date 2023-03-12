@@ -43,6 +43,7 @@ dependencies:
   firebase_auth: ^4.2.10
   firebase_ui_auth: ^1.1.16
   flutterfire_ui: ^0.4.3+20
+  cloud_firestore: ^4.4.4
 
 dev_dependencies:
   flutter_test:
