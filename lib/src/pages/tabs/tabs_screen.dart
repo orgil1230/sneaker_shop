@@ -6,6 +6,7 @@ import 'package:sneakers_shop/src/pages/user/user.dart';
 import 'package:sneakers_shop/src/pages/wallet/wallet.dart';
 
 class TabsScreen extends StatefulWidget {
+  static const routeName = '/tab-screen';
   const TabsScreen({super.key});
 
   @override

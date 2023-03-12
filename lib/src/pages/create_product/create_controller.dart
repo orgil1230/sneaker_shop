@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:sneakers_shop/src/model/sneaker_model.dart';
 import 'package:sneakers_shop/src/pages/list/list_controller.dart';
 
-class CreateController extends GetxController {
+class CreateController extends ListController {
   TextEditingController urlController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController priceController = TextEditingController();
@@ -11,23 +11,25 @@ class CreateController extends GetxController {
   final GlobalKey<FormState> saveFormKey = GlobalKey<FormState>();
   RxBool validate = false.obs;
 
-  final listController = Get.find<ListController>();
-
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
   onSave() {
     String url = urlController.text;
     String name = nameController.text;
     String price = priceController.text;
 
-    var sneaker = Sneaker(
-        name: name, price: double.parse(price), image: 'shoe_green.png');
-    listController.sneakers.add(sneaker);
-    listController.sneakers.refresh();
+    Sneaker sneaker = Sneaker(
+      '',
+      name: name,
+      price: double.parse(price),
+      image: 'shoe_green.png',
+      isFav: false,
+    );
 
-    Get.back();
+    fireStore.collection('sneakers').add(sneaker.toJson()).then((value) {
+      print('DocumentSnapshot added with ID: ${value.id}');
+      sneakers.add(sneaker);
+      sneakers.refresh();
+
+      Get.back();
+    });
   }
 }
